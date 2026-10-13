@@ -4,16 +4,29 @@ const username = Antri.$('username');
 const password = Antri.$('password');
 const submitButton = Antri.$('loginSubmit');
 const submitLabel = Antri.$('loginSubmitLabel');
-const exampleButton = Antri.$('exampleAdmin');
+const spinner = Antri.$('loginSpinner');
+const loginStatus = Antri.$('loginStatus');
+const passwordToggle = Antri.$('passwordToggle');
 const previousSession = Antri.readSession();
 if (previousSession)
     location.replace(Antri.landing(previousSession));
-exampleButton.addEventListener('click', () => {
-    username.value = 'emilys';
-    password.value = 'emilyspass';
-    Antri.feedback('loginError', '');
-    password.focus();
+passwordToggle.addEventListener('click', () => {
+    const visible = password.type === 'password';
+    password.type = visible ? 'text' : 'password';
+    passwordToggle.textContent = visible ? 'Tutup' : 'Lihat';
+    passwordToggle.setAttribute('aria-pressed', String(visible));
+    passwordToggle.setAttribute('aria-label', visible ? 'Sembunyikan password' : 'Tampilkan password');
 });
+function setLoading(loading) {
+    submitButton.disabled = loading;
+    username.readOnly = loading;
+    password.readOnly = loading;
+    form.setAttribute('aria-busy', String(loading));
+    spinner.hidden = !loading;
+    submitLabel.textContent = loading ? 'Sedang masuk...' : 'Masuk';
+    loginStatus.textContent = loading ? 'Memverifikasi akun Anda...' : '';
+    loginStatus.hidden = !loading;
+}
 function account(data) {
     return data !== null && typeof data === 'object' && !Array.isArray(data) ? data : null;
 }
@@ -48,16 +61,15 @@ async function resolveRole(data, token) {
 }
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (submitButton.disabled)
+        return;
     Antri.feedback('loginError', '');
     if (!username.value.trim() || !password.value) {
         Antri.feedback('loginError', 'Isi username dan password.');
         return;
     }
-    submitButton.disabled = true;
-    exampleButton.disabled = true;
-    username.readOnly = true;
-    password.readOnly = true;
-    submitLabel.textContent = 'Memproses...';
+    setLoading(true);
+    let redirecting = false;
     try {
         const result = await apiJSON('https://dummyjson.com/auth/login', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -76,6 +88,7 @@ form.addEventListener('submit', async (e) => {
         };
         Antri.saveSession(session);
         location.replace(Antri.landing(session));
+        redirecting = true;
     }
     catch (error) {
         let message = error instanceof Error ? error.message : 'Login gagal. Coba kembali.';
@@ -86,10 +99,7 @@ form.addEventListener('submit', async (e) => {
         Antri.feedback('loginError', message);
     }
     finally {
-        submitButton.disabled = false;
-        exampleButton.disabled = false;
-        username.readOnly = false;
-        password.readOnly = false;
-        submitLabel.textContent = 'Masuk';
+        if (!redirecting)
+            setLoading(false);
     }
 });

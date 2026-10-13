@@ -3,15 +3,28 @@ const username = Antri.$<HTMLInputElement>('username');
 const password = Antri.$<HTMLInputElement>('password');
 const submitButton = Antri.$<HTMLButtonElement>('loginSubmit');
 const submitLabel = Antri.$<HTMLElement>('loginSubmitLabel');
-const exampleButton = Antri.$<HTMLButtonElement>('exampleAdmin');
+const spinner = Antri.$<HTMLElement>('loginSpinner');
+const loginStatus = Antri.$<HTMLElement>('loginStatus');
+const passwordToggle = Antri.$<HTMLButtonElement>('passwordToggle');
 const previousSession = Antri.readSession();
 if (previousSession) location.replace(Antri.landing(previousSession));
-exampleButton.addEventListener('click', () => {
-  username.value = 'emilys';
-  password.value = 'emilyspass';
-  Antri.feedback('loginError','');
-  password.focus();
+passwordToggle.addEventListener('click', () => {
+  const visible = password.type === 'password';
+  password.type = visible ? 'text' : 'password';
+  passwordToggle.textContent = visible ? 'Tutup' : 'Lihat';
+  passwordToggle.setAttribute('aria-pressed', String(visible));
+  passwordToggle.setAttribute('aria-label', visible ? 'Sembunyikan password' : 'Tampilkan password');
 });
+function setLoading(loading: boolean): void {
+  submitButton.disabled = loading;
+  username.readOnly = loading;
+  password.readOnly = loading;
+  form.setAttribute('aria-busy', String(loading));
+  spinner.hidden = !loading;
+  submitLabel.textContent = loading ? 'Sedang masuk...' : 'Masuk';
+  loginStatus.textContent = loading ? 'Memverifikasi akun Anda...' : '';
+  loginStatus.hidden = !loading;
+}
 function account(data: unknown): Record<string, unknown> | null {
   return data !== null && typeof data === 'object' && !Array.isArray(data) ? data as Record<string,unknown> : null;
 }
@@ -38,10 +51,12 @@ async function resolveRole(data: Record<string,unknown>, token: string): Promise
   throw Error('Role akun tidak dapat diverifikasi. Silakan coba masuk kembali.');
 }
 form.addEventListener('submit', async e => {
-  e.preventDefault(); Antri.feedback('loginError','');
+  e.preventDefault();
+  if (submitButton.disabled) return;
+  Antri.feedback('loginError','');
   if (!username.value.trim() || !password.value) { Antri.feedback('loginError','Isi username dan password.'); return; }
-  submitButton.disabled = true; exampleButton.disabled = true; username.readOnly = true; password.readOnly = true;
-  submitLabel.textContent = 'Memproses...';
+  setLoading(true);
+  let redirecting = false;
   try {
     const result = await apiJSON('https://dummyjson.com/auth/login', {
       method:'POST',headers:{'Content-Type':'application/json'},
@@ -58,13 +73,13 @@ form.addEventListener('submit', async e => {
     };
     Antri.saveSession(session);
     location.replace(Antri.landing(session));
+    redirecting = true;
   } catch (error) {
     let message = error instanceof Error ? error.message : 'Login gagal. Coba kembali.';
     if (error instanceof DOMException && error.name === 'AbortError') message = 'Koneksi terlalu lambat. Coba kembali.';
     else if (error instanceof TypeError) message = 'Tidak dapat menghubungi server. Periksa koneksi internet.';
     Antri.feedback('loginError',message);
   } finally {
-    submitButton.disabled = false; exampleButton.disabled = false; username.readOnly = false; password.readOnly = false;
-    submitLabel.textContent = 'Masuk';
+    if (!redirecting) setLoading(false);
   }
 });
