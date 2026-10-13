@@ -1,7 +1,143 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard — AntriSehat</title><link rel="stylesheet" href="css/style.css"><script defer src="dist/shared.js"></script><script defer src="dist/admin.js"></script></head><body class="auth-pending"><header class="app-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">+</span>AntriSehat</a><nav class="nav"><a class="active" href="index.html">Dashboard</a><a href="operator.html">Operator</a><a href="ambil-antrian.html">Ambil Nomor</a><a href="layar.html">Layar Antrian</a></nav><div class="user-tools"><span id="accountName" class="account-name"></span><a href="login.html" class="logout-link" id="logoutButton">Keluar</a></div></div></header>
-<main class="container"><div class="page-head"><div><h1>Dashboard Admin</h1><p>Kelola jenis layanan dan nomor antrian.</p></div><button id="openReset" type="button" class="btn btn-outline">Reset antrian</button></div>
-<section class="summary" aria-label="Ringkasan"><div class="panel stat"><small>Layanan aktif</small><strong id="statServices">0</strong></div><div class="panel stat"><small>Tiket menunggu</small><strong id="statWaiting">0</strong></div><div class="panel stat"><small>Sedang dipanggil</small><strong id="statCalled">0</strong></div></section>
-<div class="dashboard-grid"><section class="panel"><div class="panel-header"><h2>Jenis antrian</h2></div><form id="serviceForm" class="service-form"><div class="field"><label for="serviceCode" class="input-label">Kode</label><input id="serviceCode" class="input" maxlength="1" placeholder="D" required></div><div class="field"><label for="serviceName" class="input-label">Nama layanan</label><input id="serviceName" class="input" placeholder="Contoh: Laboratorium" maxlength="60" required></div><button type="submit" class="btn btn-primary">+ Tambah</button></form><p class="feedback" id="serviceError" role="alert" hidden></p><div id="serviceList" class="service-list"></div></section>
-<div class="stack"><section class="panel"><div class="panel-header"><h2>Terbitkan tiket manual</h2></div><form id="manualForm" class="manual-form"><div class="fields-2"><div class="field"><label class="input-label" for="manualService">Layanan</label><select class="input" id="manualService" required><option value="">Pilih layanan</option></select></div><div class="field"><label class="input-label" for="manualPriority">Prioritas</label><select class="input" id="manualPriority"><option value="normal">Normal</option><option value="lansia">Lansia</option><option value="disabilitas">Disabilitas</option><option value="vip">VIP</option></select></div></div><button class="btn btn-primary" type="submit">Terbitkan tiket</button></form><p class="feedback" id="manualFeedback" role="status" hidden></p></section>
-<section class="panel"><div class="panel-header"><h2>Tiket terbaru</h2><small>9 terakhir</small></div><div id="ticketList" class="ticket-list"></div></section></div></div></main>
-<dialog id="resetDialog" class="dialog" aria-labelledby="resetTitle"><h2 id="resetTitle">Reset seluruh antrian?</h2><p>Semua tiket akan terhapus dan nomor tiket akan dimulai lagi dari 001. Jenis layanan tetap tersimpan.</p><div class="dialog-actions"><button type="button" id="cancelReset" class="btn btn-outline">Batal</button><button type="button" id="confirmReset" class="btn btn-danger">Ya, reset</button></div></dialog></body></html>
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard — AntriSehat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="dist/shared.js"></script>
+    <script defer src="dist/admin.js"></script>
+  </head>
+  <body class="auth-pending">
+    <header class="app-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">+</span>
+          AntriSehat
+        </a>
+
+        <nav class="nav">
+          <a class="active" href="index.html">Dashboard</a>
+          <a href="operator.html">Operator</a>
+          <a href="ambil-antrian.html">Ambil Nomor</a>
+          <a href="layar.html">Layar Antrian</a>
+        </nav>
+
+        <div class="user-tools">
+          <span id="accountName" class="account-name"></span>
+          <a href="login.html" class="logout-link" id="logoutButton">Keluar</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-head">
+        <div>
+          <h1>Dashboard Admin</h1>
+          <p>Kelola jenis layanan dan nomor antrian.</p>
+        </div>
+        <button id="openReset" type="button" class="btn btn-outline">
+          Reset antrian
+        </button>
+      </div>
+
+      <section class="summary" aria-label="Ringkasan">
+        <div class="panel stat">
+          <small>Layanan aktif</small>
+          <strong id="statServices">0</strong>
+        </div>
+        <div class="panel stat">
+          <small>Tiket menunggu</small>
+          <strong id="statWaiting">0</strong>
+        </div>
+        <div class="panel stat">
+          <small>Sedang dipanggil</small>
+          <strong id="statCalled">0</strong>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Jenis antrian</h2>
+          </div>
+
+          <form id="serviceForm" class="service-form">
+            <div class="field">
+              <label for="serviceCode" class="input-label">Kode</label>
+              <input id="serviceCode" class="input" maxlength="1" placeholder="D" required>
+            </div>
+            <div class="field">
+              <label for="serviceName" class="input-label">Nama layanan</label>
+              <input
+                id="serviceName"
+                class="input"
+                placeholder="Contoh: Laboratorium"
+                maxlength="60"
+                required
+              >
+            </div>
+            <button type="submit" class="btn btn-primary">+ Tambah</button>
+          </form>
+
+          <p class="feedback" id="serviceError" role="alert" hidden></p>
+          <div id="serviceList" class="service-list"></div>
+        </section>
+
+        <div class="stack">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Terbitkan tiket manual</h2>
+            </div>
+
+            <form id="manualForm" class="manual-form">
+              <div class="fields-2">
+                <div class="field">
+                  <label class="input-label" for="manualService">Layanan</label>
+                  <select class="input" id="manualService" required>
+                    <option value="">Pilih layanan</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label class="input-label" for="manualPriority">Prioritas</label>
+                  <select class="input" id="manualPriority">
+                    <option value="normal">Normal</option>
+                    <option value="lansia">Lansia</option>
+                    <option value="disabilitas">Disabilitas</option>
+                    <option value="vip">VIP</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" type="submit">Terbitkan tiket</button>
+            </form>
+
+            <p class="feedback" id="manualFeedback" role="status" hidden></p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Tiket terbaru</h2>
+              <small>9 terakhir</small>
+            </div>
+            <div id="ticketList" class="ticket-list"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <dialog id="resetDialog" class="dialog" aria-labelledby="resetTitle">
+      <h2 id="resetTitle">Reset seluruh antrian?</h2>
+      <p>
+        Semua tiket akan terhapus dan nomor tiket akan dimulai lagi dari 001.
+        Jenis layanan tetap tersimpan.
+      </p>
+      <div class="dialog-actions">
+        <button type="button" id="cancelReset" class="btn btn-outline">Batal</button>
+        <button type="button" id="confirmReset" class="btn btn-danger">Ya, reset</button>
+      </div>
+    </dialog>
+  </body>
+</html>
+
