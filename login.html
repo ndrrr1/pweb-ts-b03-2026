@@ -1,2 +1,46 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Masuk — AntriSehat</title><link rel="stylesheet" href="css/style.css"><script src="dist/shared.js" defer></script><script src="dist/login.js" defer></script></head>
-<body class="login-page"><main class="login-card"><div class="login-icon">+</div><h1>Masuk</h1><p class="login-subtitle">Sistem antrian Rumah Sakit AntriSehat</p><form id="loginForm" class="login-form"><div class="field"><label class="input-label" for="username">Username</label><input class="input" type="text" id="username" autocomplete="username" spellcheck="false" required placeholder="Username"></div><div class="field"><label class="input-label" for="password">Password</label><input class="input" type="password" id="password" autocomplete="current-password" required placeholder="Password"></div><p class="feedback" id="loginError" role="alert" hidden></p><button class="btn btn-primary" type="submit" id="loginSubmit"><span id="loginSubmitLabel">Masuk</span></button></form><p class="login-example">Untuk uji coba, <button class="example-link" type="button" id="exampleAdmin">isi contoh admin</button></p><p class="login-footer">AntriSehat · Layanan antrian terpadu</p></main></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Masuk — AntriSehat</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="dist/shared.js" defer></script>
+  <script src="dist/login.js" defer></script>
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <div class="login-brand">
+      <span class="login-icon" aria-hidden="true">+</span>
+      <span>AntriSehat</span>
+    </div>
+    <h1>Selamat datang</h1>
+    <p class="login-subtitle">Masuk untuk mengakses layanan antrian.</p>
+
+    <form id="loginForm" class="login-form" aria-busy="false">
+      <div class="field">
+        <label class="input-label" for="username">Username</label>
+        <input class="input" type="text" id="username" name="username"
+          autocomplete="username" autocapitalize="none" spellcheck="false"
+          required placeholder="Masukkan username">
+      </div>
+      <div class="field">
+        <label class="input-label" for="password">Password</label>
+        <div class="password-field">
+          <input class="input" type="password" id="password" name="password"
+            autocomplete="current-password" required placeholder="Masukkan password">
+          <button class="password-toggle" type="button" id="passwordToggle"
+            aria-controls="password" aria-pressed="false" aria-label="Tampilkan password">Lihat</button>
+        </div>
+      </div>
+      <p class="feedback" id="loginError" role="alert" hidden></p>
+      <button class="btn btn-primary" type="submit" id="loginSubmit">
+        <span class="login-spinner" id="loginSpinner" aria-hidden="true" hidden></span>
+        <span id="loginSubmitLabel">Masuk</span>
+      </button>
+    </form>
+    <p class="login-status" id="loginStatus" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+    <p class="login-footer">Layanan antrian rumah sakit</p>
+  </main>
+</body>
+</html>
