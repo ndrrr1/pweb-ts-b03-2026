@@ -1,0 +1,1 @@
+{"name":"antrisehat-modul-3","version":"2.0.0","private":true,"description":"Sistem antrian rumah sakit native HTML CSS TypeScript","scripts":{"build":"tsc","watch":"tsc --watch","typecheck":"tsc --noEmit"},"devDependencies":{"typescript":"^5.8.3"}}
