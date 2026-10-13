@@ -1,2 +1,53 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Layar Antrian — AntriSehat</title><link rel="stylesheet" href="css/style.css"><script defer src="dist/shared.js"></script><script defer src="dist/layar.js"></script></head><body class="auth-pending"><header class="app-header"><div class="header-inner"><a class="brand" href="layar.html"><span class="brand-mark">+</span>AntriSehat</a><nav class="nav"><a href="index.html" data-staff-only hidden>Dashboard</a><a href="operator.html" data-staff-only hidden>Operator</a><a href="ambil-antrian.html">Ambil Nomor</a><a href="layar.html" class="active">Layar Antrian</a></nav><div class="user-tools"><span class="account-name" id="accountName"></span><a class="logout-link" href="login.html" id="logoutButton">Keluar</a></div></div></header>
-<main class="container screen-main" id="screenMain"><div class="screen-header"><div><h1>Nomor sedang dipanggil</h1><p id="screenDate"></p></div><div class="page-actions"><span class="screen-time" id="screenClock"></span><button class="btn btn-outline" id="fullscreenButton" type="button">Layar penuh</button></div></div><p class="feedback" role="alert" id="screenError" hidden></p><section id="screenBoard" class="screen-board" aria-label="Layar nomor antrian"></section></main></body></html>
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Layar Antrian — AntriSehat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="dist/shared.js"></script>
+    <script defer src="dist/layar.js"></script>
+  </head>
+  <body class="auth-pending">
+    <header class="app-header">
+      <div class="header-inner">
+        <a class="brand" href="layar.html">
+          <span class="brand-mark">+</span>
+          AntriSehat
+        </a>
+
+        <nav class="nav">
+          <a href="index.html" data-staff-only hidden>Dashboard</a>
+          <a href="operator.html" data-staff-only hidden>Operator</a>
+          <a href="ambil-antrian.html">Ambil Nomor</a>
+          <a href="layar.html" class="active">Layar Antrian</a>
+        </nav>
+
+        <div class="user-tools">
+          <span class="account-name" id="accountName"></span>
+          <a class="logout-link" href="login.html" id="logoutButton">Keluar</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container screen-main" id="screenMain">
+      <div class="screen-header">
+        <div>
+          <h1>Nomor sedang dipanggil</h1>
+          <p id="screenDate"></p>
+        </div>
+
+        <div class="page-actions">
+          <span class="screen-time" id="screenClock"></span>
+          <button class="btn btn-outline" id="fullscreenButton" type="button">
+            Layar penuh
+          </button>
+        </div>
+      </div>
+
+      <p class="feedback" role="alert" id="screenError" hidden></p>
+      <section id="screenBoard" class="screen-board" aria-label="Layar nomor antrian"></section>
+    </main>
+  </body>
+</html>
+
