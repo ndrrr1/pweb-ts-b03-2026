@@ -1,2 +1,50 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Operator — AntriSehat</title><link rel="stylesheet" href="css/style.css"><script src="dist/shared.js" defer></script><script src="dist/operator.js" defer></script></head><body class="auth-pending"><header class="app-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">+</span>AntriSehat</a><nav class="nav"><a href="index.html">Dashboard</a><a href="operator.html" class="active">Operator</a><a href="ambil-antrian.html">Ambil Nomor</a><a href="layar.html">Layar Antrian</a></nav><div class="user-tools"><span class="account-name" id="accountName"></span><a class="logout-link" href="login.html" id="logoutButton">Keluar</a></div></div></header>
-<main class="container"><div class="page-head"><div><h1>Panel Operator</h1><p>Kelola panggilan antrian di setiap layanan.</p></div><label class="voice-check"><input type="checkbox" id="voiceToggle">Suara panggilan</label></div><p role="status" id="operatorFeedback" class="feedback" hidden></p><section class="operator-board" id="operatorBoard" aria-label="Antrian setiap layanan"></section></main></body></html>
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operator — AntriSehat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="dist/shared.js" defer></script>
+    <script src="dist/operator.js" defer></script>
+  </head>
+  <body class="auth-pending">
+    <header class="app-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">+</span>
+          AntriSehat
+        </a>
+
+        <nav class="nav">
+          <a href="index.html">Dashboard</a>
+          <a href="operator.html" class="active">Operator</a>
+          <a href="ambil-antrian.html">Ambil Nomor</a>
+          <a href="layar.html">Layar Antrian</a>
+        </nav>
+
+        <div class="user-tools">
+          <span class="account-name" id="accountName"></span>
+          <a class="logout-link" href="login.html" id="logoutButton">Keluar</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-head">
+        <div>
+          <h1>Panel Operator</h1>
+          <p>Kelola panggilan antrian di setiap layanan.</p>
+        </div>
+        <label class="voice-check">
+          <input type="checkbox" id="voiceToggle">
+          Suara panggilan
+        </label>
+      </div>
+
+      <p role="status" id="operatorFeedback" class="feedback" hidden></p>
+      <section class="operator-board" id="operatorBoard" aria-label="Antrian setiap layanan"></section>
+    </main>
+  </body>
+</html>
+
